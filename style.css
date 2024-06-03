@@ -1,0 +1,162 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color:black;
+    font-family: Arial, sans-serif;
+}
+
+#player-turn {
+    font-size: 20px;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+#timers {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    margin-bottom: 10px;
+    background-color: pink;
+}
+
+#player1-timer, #player2-timer {
+    font-size: 22px;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    gap: 2px;
+    background-color: #333;
+    border: 5px solid #333;
+}
+
+.cell {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+}
+
+.cell:nth-child(even) {
+    background-color: #ddd;
+}
+
+.cell:nth-child(odd) {
+    background-color: #eee;
+}
+
+.cell.highlight {
+    background-color: yellow;
+}
+
+.titan, .tank, .cannon {
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.titan {
+    background-color: red;
+}
+
+.tank {
+    background-color: red;
+}
+
+.cannon {
+    background-color: red;
+}
+
+.titan.second-set {
+    background-color: yellow;
+}
+
+.tank.second-set {
+    background-color: yellow;
+}
+
+.cannon.second-set {
+    background-color: yellow;
+}
+
+.titan::after {
+    content: "Titan";
+}
+
+.tank::after {
+    content: "Tank";
+}
+
+.cannon::after {
+    content: "Cannon";
+}
+
+.ricochets {
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-bottom: 60px solid red;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.ricochets.second-set {
+    border-bottom-color: yellow;
+}
+
+.semi-ricochets {
+    width: 0;
+    height: 80px;
+    border: 2px solid red;
+    transform: rotate(45deg);
+}
+
+.semi-ricochets.second-set {
+    border-color: yellow;
+}
+
+.bullet {
+    width: 15px;
+    height: 15px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: both
+}
+
+@keyframes moveBullet {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+#rotation-options {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#rotation-options button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
