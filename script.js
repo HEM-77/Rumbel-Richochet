@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const updatePlayerTurn = () => {
-        stopTimer();
         currentPlayer = currentPlayer === 'Player 1' ? 'Player 2' : 'Player 1';
         playerTurnDisplay.textContent = `${currentPlayer}'s turn`;
         startTimer();
@@ -145,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
         clearHighlights();
         document.getElementById('rotation-options')?.remove();
         fireBullet();
-        updatePlayerTurn();
     };
 
     const rotatePiece = (direction) => {
@@ -163,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
         clearHighlights();
         document.getElementById('rotation-options')?.remove();
         fireBullet();
-        updatePlayerTurn();
     };
 
     const showRotationOptions = () => {
@@ -185,9 +182,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let row = Math.floor(cannonParentIndex / 8);
         const direction = currentPlayer === 'Player 1' ? 1 : -1;
 
+        stopTimer();  // Stop the timer when the bullet is fired
+
         const moveBullet = () => {
             row += direction;
-            if (row < 0 || row > 7) return; // Stop if it reaches the edge
+            if (row < 0 || row > 7) {
+                updatePlayerTurn();
+                return; // Stop if it reaches the edge
+            }
             const cellIndex = row * 8 + col;
             const cell = board.children[cellIndex];
             if (!cell.querySelector('.bullet')) {
@@ -216,6 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.bullet').remove(); // Bullet disappears, tank remains
         } else if (piece.classList.contains('ricochets') || piece.classList.contains('semi-ricochets')) {
             deflectBullet(piece, cell);
+        } else {
+            updatePlayerTurn();
         }
     };
 
@@ -227,7 +231,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const moveDeflectedBullet = () => {
             row += direction[0];
             col += direction[1];
-            if (row < 0 || row > 7 || col < 0 || col > 7) return; // Stop if it reaches the edge
+            if (row < 0 || row > 7 || col < 0 || col > 7) {
+                updatePlayerTurn();
+                return; // Stop if it reaches the edge
+            }
             const cellIndex = row * 8 + col;
             const newCell = board.children[cellIndex];
             if (!newCell.querySelector('.bullet')) {
@@ -313,4 +320,3 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeEventListeners();
     startTimer();
 });
-
