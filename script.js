@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const handleBulletCollision = (piece, cell) => {
-        if (piece.classList.contains('opponent-titan')) {
+        if (piece.classList.contains('titan')) {
             alert(`${currentPlayer} wins!`);
             resetGame();
         } else if (piece.classList.contains('tank')) {
