@@ -319,4 +319,4 @@ document.addEventListener('DOMContentLoaded', () => {
     placePieces(true);
     initializeEventListeners();
     startTimer();
-});
+});                                                       
