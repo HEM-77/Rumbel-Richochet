@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentPlayer = 'Player 1';
     let selectedPiece = null;
+    let moveMade = false;
     let player1Time = 180; // 3 minutes in seconds
     let player2Time = 180; // 3 minutes in seconds
     let timerInterval = null;
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updatePlayerTurn = () => {
         currentPlayer = currentPlayer === 'Player 1' ? 'Player 2' : 'Player 1';
         playerTurnDisplay.textContent = `${currentPlayer}'s turn`;
+        moveMade = false;
         startTimer();
     };
 
@@ -141,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetIndex = parseInt(event.currentTarget.dataset.index);
         const pieceDiv = selectedPiece.parentNode.removeChild(selectedPiece);
         event.currentTarget.appendChild(pieceDiv);
+        moveMade = true; // Move made, prevent further moves
         clearHighlights();
         document.getElementById('rotation-options')?.remove();
         fireBullet();
@@ -158,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedPiece.style.transform = `rotate(${newRotation}deg)`;
             selectedPiece.dataset.rotation = newRotation;
         }
+        moveMade = true; // Move made, prevent further moves
         clearHighlights();
         document.getElementById('rotation-options')?.remove();
         fireBullet();
@@ -287,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initializeEventListeners = () => {
         document.querySelectorAll('.cell').forEach(cell => {
             cell.addEventListener('click', event => {
+                if (moveMade) return; // Prevent further moves after one move is made
                 const pieceClassList = event.target.classList;
                 const isPlayer1Piece = pieceClassList.contains('titan') || pieceClassList.contains('tank') || pieceClassList.contains('cannon') || pieceClassList.contains('ricochets') || pieceClassList.contains('semi-ricochets');
                 const isPlayer2Piece = pieceClassList.contains('second-set');
@@ -319,4 +324,5 @@ document.addEventListener('DOMContentLoaded', () => {
     placePieces(true);
     initializeEventListeners();
     startTimer();
-});                                                       
+});
+              
